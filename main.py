@@ -1,42 +1,38 @@
 import discord
 import os
-import urllib.parse, urllib.request, re
+from StayOpen import StayOpen
+from FindQuote import findQuote
+from FindYt import findYt
 
-# from StayOpen import StayOpen python program to keep up the bot 24/7
+intents = discord.Intents.default()
+intents.message_content = True
+client = discord.Client(intents=intents)
 
-client= discord.Client()
 
 @client.event
 async def on_ready():
-  print("Logged in as {0.user}". format(client))
+    print("Logged in as {0.user}".format(client))
+
 
 @client.event
 async def on_message(message):
-  if(message.author == client.user):
-    return
-  
-  msg= message.content
+    if (message.author == client.user):
+        return
 
-  if(msg.startswith("$find")):
-    try:
-      search= msg.split("$find", 1)[1]
+    msg = message.content
 
-      queryString= urllib.parse.urlencode({
-          "search_query": search
-      })
+    if (msg.startswith("$find")):
+        search = msg.split("$find", 1)[1]
+        res = findYt(msg)
+        await message.channel.send(res)
 
-      html_content= urllib.request.urlopen(
-          "http://www.youtube.com/results?" + queryString
-      )
-
-      searchResults= re.findall(r"watch\?v=(\S{11})", html_content.read().decode())
-    
-      await message.channel.send("http://www.youtube.com/watch?v="+ searchResults[0])
-
-    except IndexError as e:
-      await message.channel.send("Cant find something :( try again")
+    if (msg.startswith("$quote")):
+        try:
+            msgRes = findQuote()
+            await message.channel.send(msgRes)
+        except:
+            await message.channel.send("Wait a lil bit :/")
 
 
-# StayOpen()
-# Token auth 
+StayOpen()
 client.run(os.getenv("TOKEN"))
