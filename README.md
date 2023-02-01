@@ -1,5 +1,7 @@
 # Discord-Bot
-A python discord bot for searching youtube videos
+A python Discord bot.
 
-# Example
-![alt text](https://github.com/Button99/Discord-Bot/blob/main/Picture.png)
+# Examples
+![alt text](https://github.com/Button99/Discord-Bot/blob/main/ytPic.png)
+<br/>
+![alt text](https://github.com/Button99/Discord-Bot/blob/main/quotePic.jpg)
